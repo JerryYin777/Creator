@@ -3,5 +3,5 @@
 
 由于Github的容量限制，完整项目在百度网盘中：https://pan.baidu.com/s/1mMce21owxEu-_DDfcJb_gQ?pwd=dryk 
 
-项目介绍相关视频地址：
+项目介绍相关视频地址：https://www.bilibili.com/video/BV1ba411n79B?spm_id_from=333.999.0.0&vd_source=2e06641ee84e8e76f46c93a7e025737a
 
