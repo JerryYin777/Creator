@@ -10,7 +10,6 @@
 ### 🍔 安装
 
 ```shell
-git clone https://gitee.com/creator_2/creator-vue.git
 cd creator-vue
 yarn install
 ```
