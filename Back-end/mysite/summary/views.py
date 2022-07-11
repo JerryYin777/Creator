@@ -11,7 +11,7 @@ from .utli.gen_title import gen_title
 from .utli.wordRank import wordRank
 from .utli.sentenceRank import sentenceRank
 from .utli.loader import loadStopWords, loadWord2vec
-import torch
+import paddle
 
 # import pandas as pd
 # from sqlalchemy import create_engine
@@ -24,7 +24,7 @@ DIR = "./data/"
 # 加载模型
 config = ValidConfig()
 model = Model(GPT2Config.from_json_file(config.bert_config_path)).to(config.device)
-model.load_state_dict(torch.load('./checkpoint/model_finetune_200m.pth'))
+model.load_state_dict(paddle.load('./checkpoint/model_finetune_200m.pdparam'))
 # model.load_state_dict(torch.load('./checkpoint/model_finetune_200m.pth'))
 tokenizer = BertTokenizer.from_pretrained(config.vocab_path, use_fast=True)
 

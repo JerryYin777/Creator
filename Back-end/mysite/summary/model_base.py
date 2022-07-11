@@ -1,4 +1,4 @@
-import torch
+import paddle
 import copy
 import torch.nn as nn
 from .config import BaseConfig
