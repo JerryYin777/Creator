@@ -2,7 +2,7 @@ import copy
 import os
 from config import BaseConfig
 from dataset import TitleDataset
-import torch
+import paddle
 from torch.utils.data import DataLoader,SequentialSampler,RandomSampler,random_split
 from transformers import get_cosine_schedule_with_warmup,AdamW,BertTokenizer
 
@@ -36,7 +36,7 @@ def build_dataloaders(config: BaseConfig, use_valid=True):
         val_size = int(size * config.val_ratio)
 
         train_dataset, val_dataset = random_split(
-            dataset, [size - val_size, val_size], generator=torch.Generator().manual_seed(config.seed))
+            dataset, [size - val_size, val_size], generator=paddle.Generator().manual_seed(config.seed))
         train_sampler = RandomSampler(train_dataset)
         val_sampler = SequentialSampler(val_dataset)
 
@@ -107,7 +107,7 @@ class FGM():
         for name, param in self.model.named_parameters():
             if param.requires_grad and emb_name in name:
                 self.backup[name] = param.data.clone()
-                norm = torch.norm(param.grad)
+                norm = paddle.norm(param.grad)
                 if norm != 0:
                     r_at = epsilon * param.grad / norm
                     param.data.add_(r_at)
@@ -131,7 +131,7 @@ class PGD():
             if param.requires_grad and emb_name in name:
                 if is_first_attack:
                     self.emb_backup[name] = param.data.clone()
-                norm = torch.norm(param.grad)
+                norm = paddle.norm(param.grad)
                 if norm != 0:
                     r_at = alpha * param.grad / norm
                     param.data.add_(r_at)
@@ -146,8 +146,8 @@ class PGD():
 
     def project(self, param_name, param_data, epsilon):
         r = param_data - self.emb_backup[param_name]
-        if torch.norm(r) > epsilon:
-            r = epsilon * r / torch.norm(r)
+        if paddle.norm(r) > epsilon:
+            r = epsilon * r / paddle.norm(r)
         return self.emb_backup[param_name] + r
 
     def backup_grad(self):
@@ -180,9 +180,9 @@ def SWA(model,base_dir='./check',k_folder=None):
     swa_model = copy.deepcopy(model)
     swa_n = 0.
 
-    with torch.no_grad():
+    with paddle.no_grad():
         for _ckpt in model_path_list:
-            model.load_state_dict(torch.load(_ckpt))
+            model.load_state_dict(paddle.load(_ckpt))
             tmp_para_dict = dict(model.named_parameters())
 
             alpha = 1. / (swa_n + 1.)
@@ -192,8 +192,8 @@ def SWA(model,base_dir='./check',k_folder=None):
 
             swa_n += 1
 
-    model_name=os.path.join(base_dir,"swa_model.pth")
+    model_name=os.path.join(base_dir,"swa_model.pdparam")
 
-    torch.save(swa_model.state_dict(), model_name)
+    paddle.save(swa_model.state_dict(), model_name)
     
     return swa_model

@@ -1,5 +1,5 @@
 
-import torch.nn as nn
+import paddle.nn as nn
 from transformers import GPT2Config,GPT2Model
 
 class Model(nn.Module):

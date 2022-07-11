@@ -1,5 +1,5 @@
-import torch
-import torch.nn as nn
+import paddle
+import paddle.nn as nn
 from config import *
 from model import *
 from tqdm.autonotebook import tqdm
@@ -38,12 +38,12 @@ def train(model: nn.Module, trainloader, testloader, optimizer, scheduler, epoch
             tqdm_loader.set_description(
                 f"epoch:{e+1} batch:{i+1} loss:{loss.item():.6f} ")
             if (i+1) % config.save_batch == 0:
-                torch.save(model.state_dict(), f"./check/model_train.pth")
+                torch.save(model.state_dict(), f"./check/model_train.pdparam")
 
         # ema.apply_shadow()
         message = f"average train loss: {total_train_loss/i: .6f}\n"
         print(message)
-        torch.save(model.state_dict(), f"./check/model_train.pth")
+        torch.save(model.state_dict(), f"./check/model_train.pdparam")
         # ema.restore()
 
 

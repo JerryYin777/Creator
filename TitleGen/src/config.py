@@ -1,5 +1,5 @@
 import numpy as np
-import torch
+import paddle
 
 
 class BaseConfig():
@@ -24,13 +24,13 @@ class BaseConfig():
     @staticmethod
     def seed_all(seed=2022):
         np.random.seed(seed)
-        torch.manual_seed(seed)
-        torch.cuda.manual_seed(seed)
-        torch.cuda.manual_seed_all(seed)
+        paddle.manual_seed(seed)
+        paddle.cuda.manual_seed(seed)
+        paddle.cuda.manual_seed_all(seed)
 
     @staticmethod
     def get_device():
-        return torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        return paddle.device('cuda' if paddle.cuda.is_available() else 'cpu')
 
 
 class TrainConfig(BaseConfig):

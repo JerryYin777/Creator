@@ -1,4 +1,4 @@
-import torch
+import paddle
 from torch.utils.data import Dataset
 from config import BaseConfig
 import json
@@ -56,7 +56,7 @@ class TitleDataset(Dataset):
         label_mask = [0]*(len(content_token_ids)+2)+[1] * (len(title_token_ids)+1)+[0]*pad_len
         
         return {
-            'input_ids': torch.tensor(input_ids).to(self.config.device),
-            'token_type_ids': torch.tensor(token_type_ids).to(self.config.device),
-            'label_mask': torch.tensor(label_mask).to(self.config.device)
+            'input_ids': paddle.tensor(input_ids).to(self.config.device),
+            'token_type_ids': paddle.tensor(token_type_ids).to(self.config.device),
+            'label_mask': paddle.tensor(label_mask).to(self.config.device)
         }

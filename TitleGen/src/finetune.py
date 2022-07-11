@@ -1,5 +1,5 @@
-import torch
-import torch.nn as nn
+import paddle
+import paddle.nn as nn
 from config import *
 from model import *
 from tqdm.autonotebook import tqdm
@@ -40,14 +40,14 @@ def finetune(model: nn.Module, trainloader, testloader,optimizer,scheduler,epoch
         # ema.apply_shadow()
         message=f"average train loss: {total_train_loss/i: .6f}\n"
         print(message)
-        torch.save(model.state_dict(), f"./check/model_finetune.pth")
+        torch.save(model.state_dict(), f"./check/model_finetune.pdparam")
         # ema.restore()
 
 if __name__ == '__main__':
     config = FinetuneConfig()
     config.seed_all()
     model = Model(GPT2Config.from_json_file(config.bert_config_path)).to(config.device)
-    model.load_state_dict(torch.load('./check/model_train.pth'))
+    model.load_state_dict(torch.load('./check/model_train.pdparam'))
     trainloader,testloader= build_dataloaders(config,False)
     max_steps=len(trainloader)*config.epochs
     optimizer,scheduler=build_optimizer(config,model,max_steps)
