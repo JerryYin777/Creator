@@ -5,3 +5,4 @@
 
 项目介绍相关视频地址：https://www.bilibili.com/video/BV1ba411n79B?spm_id_from=333.999.0.0&vd_source=2e06641ee84e8e76f46c93a7e025737a
 
+![页面功能一图知](https://user-images.githubusercontent.com/88324880/180852665-6bd200fd-376f-41db-945a-bddbb8c45d89.png)
